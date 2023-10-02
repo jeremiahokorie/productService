@@ -1,0 +1,13 @@
+package com.productservice.dto.request;
+
+import lombok.Data;
+
+@Data
+public class ITemRequest {
+    private String name;
+    private String description;
+    private Integer stock;
+    private Long category_id;
+    private Integer amount;
+    private String quantity;
+}
