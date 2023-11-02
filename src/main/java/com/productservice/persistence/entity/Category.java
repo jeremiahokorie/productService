@@ -1,14 +1,12 @@
 package com.productservice.persistence.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.productservice.dto.request.CategoryDto;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
 @Entity
-public class Category {
+public class Category extends CategoryDto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

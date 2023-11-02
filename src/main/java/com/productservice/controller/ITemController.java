@@ -6,15 +6,14 @@ import com.productservice.dto.request.ITemRequest;
 import com.productservice.persistence.entity.Category;
 import com.productservice.persistence.entity.ITem;
 import com.productservice.service.ITemService;
+import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -34,8 +33,30 @@ public class ITemController {
         return new ResponseEntity(map, HttpStatus.CREATED);
     }
 
-    @PostMapping("/create")
-    public ITem create(@RequestBody ITem item){
-        return iTemService.saveItem(item);
+    @PostMapping("/Item/create")
+    public ResponseEntity<ITem> create(@RequestBody ITem item){
+        Map<String,Object> map = new LinkedHashMap<>();
+        ITem  items = iTemService.saveItem(item);
+        map.put("status","200");
+        map.put("message","Item successfully created");
+        map.put("data",items);
+        return new ResponseEntity(map, HttpStatus.CREATED);
     }
+
+    @GetMapping("/getAllItem")
+    public ResponseEntity<ITem> getAllItem(){
+        Map<String,Object> map = new LinkedHashMap<>();
+        List<ITem> item = iTemService.getAllItem();
+        map.put("status","200");
+        map.put("message","successfully retrieved");
+        map.put("data",item);
+        return new ResponseEntity(map,HttpStatus.OK);
+    }
+
+    @GetMapping("/Item/{id}")
+    public ResponseEntity<?>getITemById(@PathVariable("id") Long id){
+        ITem iTem = iTemService.findItemById(id);
+        return new ResponseEntity<>(iTem, HttpStatus.FOUND);
+    }
+
 }

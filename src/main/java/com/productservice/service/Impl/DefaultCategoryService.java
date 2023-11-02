@@ -1,10 +1,12 @@
 package com.productservice.service.Impl;
 
+import com.productservice.core.exceptions.CustomException;
 import com.productservice.dto.request.CategoryDto;
 import com.productservice.dto.request.CategoryRequest;
 import com.productservice.persistence.entity.Category;
 import com.productservice.persistence.repository.CategoryRepository;
 import com.productservice.service.CategoryService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -20,14 +22,21 @@ public class DefaultCategoryService implements CategoryService {
     public CategoryDto create(CategoryRequest category) {
         Category category1 = new Category();
         category1.setName(category.getName());
-        Category category2 =  categoryRepository.save(category1);
-         CategoryDto categoryDto = new CategoryDto();
-         categoryDto.setName(category2.getName());
-         return categoryDto;
+        Category category2 = categoryRepository.save(category1);
+        CategoryDto categoryDto = new CategoryDto();
+        categoryDto.setName(category2.getName());
+        return categoryDto;
     }
 
     @Override
     public List<Category> getCategory() {
         return categoryRepository.findAll();
+    }
+
+    @Override
+    public CategoryDto getCategoryById(Long id) {
+        CategoryDto category = categoryRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Employee with given Id does not exist: " + id));
+        return category;
     }
 }

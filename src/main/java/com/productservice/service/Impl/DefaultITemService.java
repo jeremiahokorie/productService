@@ -10,10 +10,15 @@ import com.productservice.service.ITemService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class DefaultITemService implements ITemService {
 
     private ITemRepository iTemRepository;
@@ -43,8 +48,23 @@ public class DefaultITemService implements ITemService {
     @Override
     public ITem saveItem(ITem item) {
         Category selectedCategory = categoryRepository.findById(item.getCategory().getId())
-                .orElseThrow(() -> new IllegalArgumentException("Category not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Category not found"));
         item.setCategory(selectedCategory);
+        item.setDate(new Date());
         return iTemRepository.save(item);
     }
+
+    @Override
+    public List<ITem> getAllItem() {
+        return iTemRepository.findAll();
+    }
+
+    @Override
+    public ITem findItemById(Long id) {
+       ITem iTem = iTemRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not Found: "+id));
+        return iTem;
+    }
+
+
 }

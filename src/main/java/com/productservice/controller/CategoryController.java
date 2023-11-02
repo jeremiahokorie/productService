@@ -43,4 +43,12 @@ public class CategoryController {
         map.put("data",category);
         return new ResponseEntity(map,HttpStatus.FOUND);
     }
+
+    @GetMapping("/Category/{id}")
+    public ResponseEntity<CategoryDto>getById(@PathVariable("id") Long id){
+        CategoryDto categoryDto = categoryService.getCategoryById(id);
+        return ResponseEntity.ok(categoryDto);
+    }
+
+
 }

@@ -9,4 +9,6 @@ import java.util.List;
 public interface CategoryService {
     CategoryDto create(CategoryRequest category);
     List<Category> getCategory();
+
+    CategoryDto getCategoryById(Long id);
 }
