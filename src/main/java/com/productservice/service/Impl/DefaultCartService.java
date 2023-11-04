@@ -56,6 +56,37 @@ public class DefaultCartService implements CartService {
         return cartDto;
     }
 
+    @Override
+    public CartDto getCartById(Long id) {
+        Cart cart = cartRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Cart not found"));
+        CartDto cartDto = new CartDto();
+        cartDto.setCartId(cart.getCartId());
+        cartDto.setDate(cart.getDate());
+        cartDto.setItem(cart.getItems().get(0));
+        cartDto.setQuantity(cart.getQuantity());
+        cartDto.setStatus(cart.getStatus());
+        return cartDto;
+    }
+
+    @Override
+    public void deleteCart(Long id) {
+        cartRepository.deleteById(id);
+    }
+
+    //AddItemToCart
+    @Override
+    public void addItemToCart(Long cartId, Long itemId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new CustomException("Cart not found"));
+        ITem item = iTemRepository.findById(itemId)
+                .orElseThrow(() -> new CustomException("Item not found"));
+
+        cart.getItems().add(item);
+        cart.setDate(new Date());
+        cart.setStatus("active");
+        cartRepository.save(cart);
+    }
 
 }
 

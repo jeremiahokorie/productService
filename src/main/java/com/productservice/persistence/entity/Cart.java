@@ -21,6 +21,7 @@ public class Cart {
     private int quantity;
     @Column(name = "created_date")
     private Date date;
+    private String status;
 
 
 }

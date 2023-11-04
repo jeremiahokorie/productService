@@ -47,5 +47,29 @@ public class CartController {
         return cartService.addToCart(cartDto);
     }
 
+    @GetMapping("/cart/{id}")
+    public ResponseEntity<CartDto>getById(@PathVariable("id") Long id){
+        CartDto cartDto = cartService.getCartById(id);
+        return ResponseEntity.ok(cartDto);
+    }
+
+    @DeleteMapping("/cart/{id}")
+    public void deleteCart(@PathVariable("id") Long id){
+        cartService.deleteCart(id);
+    }
+
+    //AddItemToCart
+    @PostMapping("/cart/{cartId}/add")
+    public ResponseEntity<String> addItemToCart(@PathVariable Long cartId, @RequestParam Long itemId) {
+        cartService.addItemToCart(cartId, itemId);
+        return ResponseEntity.ok("Item added to cart successfully");
+    }
+
+    //generate api request for add item to cart
+    //generate api request for get cart
+    //generate api request for delete cart
+    //generate api request for delete item from cart
+
+
 
 }
