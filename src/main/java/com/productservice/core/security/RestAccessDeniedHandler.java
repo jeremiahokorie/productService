@@ -15,13 +15,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Date;
 
-/**
- * Project title: authservice
- *
- * @author johnadeshola
- * Date: 9/21/23
- * Time: 9:40 PM
- */
+
 @Component
 @RequiredArgsConstructor
 public class RestAccessDeniedHandler implements AccessDeniedHandler {

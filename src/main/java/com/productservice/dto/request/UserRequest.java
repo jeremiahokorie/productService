@@ -13,4 +13,8 @@ public class UserRequest {
     private String phone;
     private String password;
     private String role;
+    private String address;
+    private String city;
+    private String state;
+    private String username;
 }

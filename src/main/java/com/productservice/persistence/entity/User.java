@@ -15,11 +15,6 @@ public class User {
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    /**
-     * define column name and their length.
-     * For example, @Column(name = "name", length=20)
-     * Do same for all the fields here
-     */
     @Column(name = "name", length=50)
     private String name;
     @Column(name = "email", length=55)
@@ -28,6 +23,14 @@ public class User {
     private String phone;
     @Column(name = "password", length=80)
     private String password;
+    @Column(name = "address", length=100)
+    private String address;
+    @Column(name = "city", length=50)
+    private String city;
+    @Column(name = "state", length=50)
+    private String state;
     @Column(name = "role", length=20)
     private String role;
+    @Column(name = "username", length=50)
+    private String username;
 }

@@ -23,5 +23,4 @@ public class Cart {
     private Date date;
     private String status;
 
-
 }

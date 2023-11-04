@@ -43,4 +43,7 @@ public class CustomException extends RuntimeException{
         this.error = code;
 
     }
+
+    public CustomException(String s, int i) {
+    }
 }

@@ -4,11 +4,13 @@ package com.productservice.controller;
 import com.productservice.core.constants.AppConstant;
 import com.productservice.dto.request.UserDto;
 import com.productservice.dto.request.UserRequest;
+import com.productservice.dto.response.UserResponse;
 import com.productservice.persistence.entity.User;
 import com.productservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -42,6 +44,35 @@ public class UserController {
         map.put("data",users);
         return new  ResponseEntity(map, HttpStatus.FOUND);
     }
+
+    @GetMapping("/getUserById/{id}")
+    public ResponseEntity<?> getUserById(@PathVariable Long id){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        User user =  userService.getUserById(id);
+        map.put("Status","200");
+        map.put("message","User Found ");
+        map.put("data",user);
+        return new  ResponseEntity(map, HttpStatus.FOUND);
+    }
+
+    @GetMapping("/getUserByUserName/{username}")
+    public ResponseEntity<?> getUserByUserName(@PathVariable String username){
+        Map<String, Object> map = new LinkedHashMap<String, Object>();
+        User user =  userService.getUserByUserName(username);
+        map.put("Status","200");
+        map.put("message","User Found ");
+        map.put("data",user);
+        return new  ResponseEntity(map, HttpStatus.FOUND);
+    }
+
+    @PutMapping("/updateUser/{id}")
+    public ResponseEntity<UserResponse> updateUser(@RequestBody UserRequest user, @PathVariable Long id){
+       UserResponse userResponse = userService.updateUser(user, id);
+         return new ResponseEntity(userResponse, HttpStatus.OK);
+    }
+
+
+
 
 
 

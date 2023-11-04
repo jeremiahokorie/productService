@@ -4,13 +4,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
-/**
- * Project title: authservice
- *
- * @author johnadeshola
- * Date: 9/21/23
- * Time: 1:30 PM
- */
+
+
+
 @Getter
 @Setter
 @NoArgsConstructor
