@@ -6,6 +6,7 @@ import com.productservice.core.security.RestAccessDeniedHandler;
 import com.productservice.core.security.RestAuthenticationEntryPoint;
 import com.productservice.core.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,6 +19,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.firewall.HttpFirewall;
 import org.springframework.security.web.firewall.StrictHttpFirewall;
@@ -34,14 +36,16 @@ public class WebSecurityConfig {
     private final RestAuthenticationEntryPoint authenticationEntryPoint;
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain2(HttpSecurity http) throws Exception {
         http.apply(new JwtTokenFilterConfigurer(jwtUtil));
         http
                 .securityMatcher(new RequestHeaderRequestMatcher("Authorization"))
                 .authorizeHttpRequests(authorize -> {
-                    authorize.requestMatchers("/login", "/update").permitAll();
+                    authorize.requestMatchers("/login", "/signup").permitAll();
                     authorize.requestMatchers("/swagger-ui**").permitAll();
                     authorize.anyRequest().authenticated();
+
+
                 })
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(accessDeniedHandler)
@@ -91,4 +95,21 @@ public class WebSecurityConfig {
         firewall.setAllowUrlEncodedSlash(true);
         return firewall;
     }
+
+
+ //authenticate other endpoint except login and signup
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http.apply(new JwtTokenFilterConfigurer(jwtUtil));
+        http
+                .securityMatcher(new RequestHeaderRequestMatcher("Authorization"))
+                .authorizeHttpRequests(authorize -> {
+                    authorize.requestMatchers("/login", "/signup").permitAll();
+                    authorize.requestMatchers("/swagger-ui**").permitAll();
+                    authorize.anyRequest().authenticated();
+                });
+        return http.build();
+    }
+
+
 }

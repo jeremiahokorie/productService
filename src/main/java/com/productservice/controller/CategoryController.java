@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedHashMap;
@@ -20,6 +21,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(AppConstant.APP_CONTEXT)
 @RequiredArgsConstructor
+@PreAuthorize("isAuthenticated()")
 public class CategoryController {
 
     private final CategoryService categoryService;

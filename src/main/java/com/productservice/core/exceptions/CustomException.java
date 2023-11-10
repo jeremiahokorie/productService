@@ -2,6 +2,8 @@ package com.productservice.core.exceptions;
 
 import com.productservice.dto.enums.ErrorCode;
 import lombok.Data;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+
 import java.util.HashMap;
 import java.util.Map;
 

@@ -1,7 +1,10 @@
 package com.productservice.dto.request;
 
 import com.productservice.persistence.entity.User;
+import jakarta.persistence.Column;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class UserDto {
@@ -14,6 +17,12 @@ public class UserDto {
     private String state;
     private String role;
     private String username;
+    private Date lastLoginDate;
+    private String lastLoginIp;
+    private Integer userLock;
+    private Date userLockDate;
+    private Date lastPasswordResetDate;
+
 
     public static UserDto fromEntity(User user) {
         UserDto userDto = new UserDto();
@@ -26,6 +35,11 @@ public class UserDto {
         userDto.setState(user.getState());
         userDto.setRole(user.getRole());
         userDto.setUsername(user.getUsername());
+        userDto.setLastLoginDate(user.getLastLoginDate());
+        userDto.setLastLoginIp(user.getLastLoginIp());
+        userDto.setUserLock(user.getUserLock());
+        userDto.setUserLockDate(user.getUserLockDate());
+        userDto.setLastPasswordResetDate(user.getLastPasswordResetDate());
         return userDto;
     }
 }

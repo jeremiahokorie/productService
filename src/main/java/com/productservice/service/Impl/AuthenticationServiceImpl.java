@@ -15,6 +15,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 import static com.productservice.core.constants.AppDetails.EXPIRE_IN;
 
 
@@ -44,6 +46,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         // token creation
         User user = userRepository.findByEmail(authenticationRequest.getEmail()).orElseThrow(() -> new BadCredentialsException("User not found"));
+        user.setLastLoginDate(new Date());
+        userRepository.save(user);
         String jwtToken = jwtUtil.createToken(user.getEmail(), user.getRole());
         return new UserTokenState(jwtToken, EXPIRE_IN);
     }

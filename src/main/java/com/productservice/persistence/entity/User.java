@@ -3,6 +3,8 @@ package com.productservice.persistence.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
+
 @Entity
 @Table(name = "users")
 @Setter
@@ -33,4 +35,25 @@ public class User {
     private String role;
     @Column(name = "username", length=50)
     private String username;
+
+    @Column(name = "last_login_date")
+    private Date lastLoginDate;
+
+    @Column(name = "last_login_ip")
+    private String lastLoginIp;
+
+    @Column(name = "user_lock")
+    private Integer userLock;
+
+    @Column(name = "user_lock_date")
+    private Date userLockDate;
+
+    @Column(name = "last_password_reset_date")
+    private Date lastPasswordResetDate;
+
+    @Basic(optional = false)
+    @Column(name = "user_level")
+    private int userLevel;
+
+
 }

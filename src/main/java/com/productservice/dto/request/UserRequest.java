@@ -17,4 +17,9 @@ public class UserRequest {
     private String city;
     private String state;
     private String username;
+
+   public CharSequence getNewPassword() {
+        return password;
+   }
+
 }

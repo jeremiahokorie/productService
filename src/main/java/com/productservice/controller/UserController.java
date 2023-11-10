@@ -2,17 +2,22 @@ package com.productservice.controller;
 
 
 import com.productservice.core.constants.AppConstant;
+import com.productservice.dto.request.ChangePasswordRequest;
 import com.productservice.dto.request.UserDto;
 import com.productservice.dto.request.UserRequest;
+import com.productservice.dto.response.AppResponse;
+import com.productservice.dto.response.ChangePasswordResponse;
 import com.productservice.dto.response.UserResponse;
 import com.productservice.persistence.entity.User;
 import com.productservice.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.AccessDeniedException;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,6 +25,7 @@ import java.util.Map;
 @RestController
 @RequestMapping(AppConstant.APP_CONTEXT)
 @RequiredArgsConstructor
+//@PreAuthorize("isAuthenticated()")
 public class UserController {
 
     private final UserService userService;
@@ -33,7 +39,6 @@ public class UserController {
         map.put("data",userdto);
         return new ResponseEntity(map, HttpStatus.CREATED);
     }
-
 
     @GetMapping("/getAllUser")
     public ResponseEntity<?> updateCredentials(){
@@ -71,9 +76,21 @@ public class UserController {
          return new ResponseEntity(userResponse, HttpStatus.OK);
     }
 
+    //change password functionality
+//    @PostMapping("/changePassword/{id}")
+//    public ResponseEntity<UserResponse> changePassword(@RequestBody UserRequest user, @PathVariable Long id){
+//       UserResponse userResponse = userService.changePassword(user, id);
+//         return new ResponseEntity(userResponse, HttpStatus.OK);
+//    }
 
 
+    @PutMapping(path = "password/change")
+    public ResponseEntity<AppResponse<ChangePasswordResponse>> changePassword(@RequestBody @Valid ChangePasswordRequest request) throws AccessDeniedException {
 
+        ChangePasswordResponse passwordChange = userService.changePassword(request);
 
-
+        AppResponse<ChangePasswordResponse> response = AppResponse.<ChangePasswordResponse>builder().message(AppConstant.ApiResponseMessage.SUCCESSFUL)
+                .status(HttpStatus.OK.value()).data(passwordChange).error("").build();
+        return ResponseEntity.ok().body(response);
+    }
 }

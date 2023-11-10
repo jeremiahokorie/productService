@@ -17,4 +17,7 @@ public class OrderDto {
     private Integer qty;
     private ShippingAddress address;
     private Category category;
+
+
+    
 }
