@@ -22,6 +22,9 @@ public class UserDto {
     private Integer userLock;
     private Date userLockDate;
     private Date lastPasswordResetDate;
+    private Date updatedAt;
+    private String userId;
+    private String userImage;
 
 
     public static UserDto fromEntity(User user) {

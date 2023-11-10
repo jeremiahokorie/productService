@@ -55,5 +55,14 @@ public class User {
     @Column(name = "user_level")
     private int userLevel;
 
+    @Column(name = "updated_at")
+    private Date updatedAt;
+
+    @Column(name = "user_id")
+    private String userId;
+
+    @Column(name = "user_image")
+    private String userImage;
+
 
 }

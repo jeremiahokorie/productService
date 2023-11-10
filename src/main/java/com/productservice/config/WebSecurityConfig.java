@@ -45,7 +45,6 @@ public class WebSecurityConfig {
                     authorize.requestMatchers("/swagger-ui**").permitAll();
                     authorize.anyRequest().authenticated();
 
-
                 })
                 .exceptionHandling(exceptionHandling -> exceptionHandling
                         .accessDeniedHandler(accessDeniedHandler)

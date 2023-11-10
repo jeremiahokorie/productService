@@ -13,5 +13,6 @@ public class ITemRequest {
     private Integer amount;
     private String quantity;
     private Date date;
+    private String image;
 
 }

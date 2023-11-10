@@ -14,4 +14,6 @@ public interface ITemService {
     List<ITem> getAllItem();
 
     ITem findItemById(Long id);
+
+    void deleteItem(Long id);
 }

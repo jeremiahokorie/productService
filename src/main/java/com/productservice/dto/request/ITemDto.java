@@ -11,4 +11,5 @@ public class ITemDto {
     private Category category;
     private Integer amount;
     private String quantity;
+    private String image;
 }

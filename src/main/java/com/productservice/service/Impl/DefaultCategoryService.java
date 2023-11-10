@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 public class DefaultCategoryService implements CategoryService {
-
     private CategoryRepository categoryRepository;
 
     @Override

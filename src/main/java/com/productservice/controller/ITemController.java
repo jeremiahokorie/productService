@@ -59,4 +59,10 @@ public class ITemController {
         return new ResponseEntity<>(iTem, HttpStatus.FOUND);
     }
 
+    @DeleteMapping("/Item/{id}")
+    public ResponseEntity<?> deleteItem(@PathVariable("id") Long id){
+        iTemService.deleteItem(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

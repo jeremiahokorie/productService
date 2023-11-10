@@ -21,33 +21,33 @@ import java.util.Map;
 @RestController
 @RequestMapping(AppConstant.APP_CONTEXT)
 @RequiredArgsConstructor
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
     @PostMapping("/createCategory")
-    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryRequest category){
+    public ResponseEntity<CategoryDto> createCategory(@RequestBody CategoryRequest category) {
         Map<String, Object> map = new LinkedHashMap<>();
         CategoryDto category1 = categoryService.create(category);
-        map.put("status","201");
-        map.put("message","Category Created Successfully");
-        map.put("data",category1);
+        map.put("status", "201");
+        map.put("message", "Category Created Successfully");
+        map.put("data", category1);
         return new ResponseEntity(map, HttpStatus.CREATED);
     }
 
     @GetMapping("/getCategory")
-    public ResponseEntity<Category> getAllCategory(){
-        Map<String,Object> map = new LinkedHashMap<>();
-        List<Category> category =  categoryService.getCategory();
-        map.put("status","200");
-        map.put("message","Category Successfully Retrieved");
-        map.put("data",category);
-        return new ResponseEntity(map,HttpStatus.FOUND);
+    public ResponseEntity<Category> getAllCategory() {
+        Map<String, Object> map = new LinkedHashMap<>();
+        List<Category> category = categoryService.getCategory();
+        map.put("status", "200");
+        map.put("message", "Category Successfully Retrieved");
+        map.put("data", category);
+        return new ResponseEntity(map, HttpStatus.FOUND);
     }
 
     @GetMapping("/Category/{id}")
-    public ResponseEntity<CategoryDto>getById(@PathVariable("id") Long id){
+    public ResponseEntity<CategoryDto> getById(@PathVariable("id") Long id) {
         CategoryDto categoryDto = categoryService.getCategoryById(id);
         return ResponseEntity.ok(categoryDto);
     }

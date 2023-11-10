@@ -27,8 +27,10 @@ import com.google.common.collect.ImmutableMap;
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
+import static com.productservice.core.util.Randomizer.generate;
 
 @Service
 @RequiredArgsConstructor
@@ -41,6 +43,7 @@ public class DefaultUserService implements UserService {
     private final BaseRepository repo;
     private final ObjectMapper mapper;
     private ModelMapper modelMapper;
+    String userId = "HBS" + UUID.randomUUID().toString();
 
 
     @Override
@@ -56,11 +59,17 @@ public class DefaultUserService implements UserService {
                 .state(request.getState())
                 .username(request.getUsername())
                 .userLock(1)
+                .userId(userId)
                 .userLockDate(new Date())
                 .lastLoginDate(new Date())
                 .build();
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new CustomException(" " + request.getEmail() + " Already exist, Try another email address");
+
+        }
+
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
+            throw new CustomException(" " + request.getEmail() + " Already exist, Try another Username address");
 
         }
 
@@ -87,10 +96,28 @@ public class DefaultUserService implements UserService {
     @Override
     public UserResponse updateUser(UserRequest request, Long id) {
         User user = userRepository.findById(id).orElseThrow(() -> new CustomException("User not found"));
-        modelMapper.map(request, user);
+        user.setName(request.getName());
+        user.setEmail(request.getEmail());
+        user.setPhone(request.getPhone());
+        user.setRole(request.getRole());
+        user.setAddress(request.getAddress());
+        user.setCity(request.getCity());
+        user.setState(request.getState());
+        user.setUsername(request.getUsername());
+        user.setUpdatedAt(new Date());
         userRepository.save(user);
-        return modelMapper.map(user, UserResponse.class);
+        return UserResponse.builder()
+                .name(user.getName())
+                .email(user.getEmail())
+                .phone(user.getPhone())
+                .role(user.getRole())
+                .address(user.getAddress())
+                .city(user.getCity())
+                .state(user.getState())
+                .username(user.getUsername())
+                .build();
     }
+
 
     //
     public ChangePasswordResponse changePassword(ChangePasswordRequest request) throws AccessDeniedException {
@@ -108,6 +135,7 @@ public class DefaultUserService implements UserService {
                 .Id(user.getId())
                 .build();
     }
+
 
 
 }

@@ -59,6 +59,7 @@ public class DefaultITemService implements ITemService {
         return iTemRepository.findAll();
     }
 
+
     @Override
     public ITem findItemById(Long id) {
        ITem iTem = iTemRepository.findById(id)
@@ -66,5 +67,9 @@ public class DefaultITemService implements ITemService {
         return iTem;
     }
 
+    @Override
+    public void deleteItem(Long id) {
+        iTemRepository.deleteById(id);
+    }
 
 }
