@@ -1,9 +1,7 @@
 package com.productservice.persistence.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
 import java.util.List;
@@ -12,12 +10,18 @@ import java.util.List;
 @Entity
 public class Cart {
 
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cartId;
-    @OneToMany
+
+    @ManyToOne()
     @JoinColumn(name = "item_id")
-    private List<ITem> items;
+    private Item item;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     private int quantity;
     @Column(name = "created_date")
     private Date date;

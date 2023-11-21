@@ -1,19 +1,24 @@
 package com.productservice.dto.request;
 
-import com.productservice.persistence.entity.ITem;
+import com.productservice.persistence.entity.Item;
+import com.productservice.persistence.entity.User;
+import jakarta.persistence.Column;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
 public class CartDto {
-    private ITem item;
+    private long itemId;
     private int quantity;
     private Long cartId;
     private Integer total;
     private String status;
     private Date date;
-
+    private long userId;
 
 //    {
 //        "item": {

@@ -50,5 +50,9 @@ public class DefaultShippingAddressService implements ShippingAddressService {
 
     }
 
+    @Override
+    public void deleteAddress(Long id) {
+        shippingAddressRepository.deleteById(id);
+    }
 
 }

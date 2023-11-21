@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping(AppConstant.APP_CONTEXT)
 @AllArgsConstructor
 @Slf4j
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 public class CartController {
     private CartService cartService;
 

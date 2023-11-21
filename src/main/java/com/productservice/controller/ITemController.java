@@ -3,10 +3,8 @@ package com.productservice.controller;
 import com.productservice.core.constants.AppConstant;
 import com.productservice.dto.request.ITemDto;
 import com.productservice.dto.request.ITemRequest;
-import com.productservice.persistence.entity.Category;
-import com.productservice.persistence.entity.ITem;
+import com.productservice.persistence.entity.Item;
 import com.productservice.service.ITemService;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +32,9 @@ public class ITemController {
     }
 
     @PostMapping("/Item/create")
-    public ResponseEntity<ITem> create(@RequestBody ITem item){
+    public ResponseEntity<Item> create(@RequestBody Item item){
         Map<String,Object> map = new LinkedHashMap<>();
-        ITem  items = iTemService.saveItem(item);
+        Item items = iTemService.saveItem(item);
         map.put("status","200");
         map.put("message","Item successfully created");
         map.put("data",items);
@@ -44,9 +42,9 @@ public class ITemController {
     }
 
     @GetMapping("/getAllItem")
-    public ResponseEntity<ITem> getAllItem(){
+    public ResponseEntity<Item> getAllItem(){
         Map<String,Object> map = new LinkedHashMap<>();
-        List<ITem> item = iTemService.getAllItem();
+        List<Item> item = iTemService.getAllItem();
         map.put("status","200");
         map.put("message","successfully retrieved");
         map.put("data",item);
@@ -55,7 +53,7 @@ public class ITemController {
 
     @GetMapping("/Item/{id}")
     public ResponseEntity<?>getITemById(@PathVariable("id") Long id){
-        ITem iTem = iTemService.findItemById(id);
+        Item iTem = iTemService.findItemById(id);
         return new ResponseEntity<>(iTem, HttpStatus.FOUND);
     }
 
@@ -63,6 +61,25 @@ public class ITemController {
     public ResponseEntity<?> deleteItem(@PathVariable("id") Long id){
         iTemService.deleteItem(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //findItem using item name and location
+
+    @GetMapping("/{itemId}/locations/{id}")
+    public ResponseEntity<Item> findItemByItemNameAndLocation(@PathVariable("itemId") Long itemId, @PathVariable("id") Long locationId){
+        Item iTem = iTemService.findItemByItemNameAndLocation(itemId, locationId);
+        if (iTem != null) {
+            return new ResponseEntity<>(iTem, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //findItem using location
+    @GetMapping("/locations/{id}")
+    public ResponseEntity<?> findItemByLocation(@PathVariable("id") Long id){
+        List<Item> items = iTemService.getAllItemByLocation(id);
+        return new ResponseEntity<>(items, HttpStatus.OK);
     }
 
 }

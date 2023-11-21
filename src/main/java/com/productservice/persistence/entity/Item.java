@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-public class ITem {
+public class Item {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
@@ -34,5 +34,9 @@ public class ITem {
 
     @Column(name = "image")
     private String image;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
 }

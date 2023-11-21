@@ -2,7 +2,6 @@ package com.productservice.service;
 
 import com.productservice.dto.request.CartDto;
 import com.productservice.persistence.entity.Cart;
-import com.productservice.persistence.entity.ITem;
 
 import java.util.List;
 

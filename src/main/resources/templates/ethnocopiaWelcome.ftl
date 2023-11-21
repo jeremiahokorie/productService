@@ -392,7 +392,7 @@
                                                                         <br>
                                                                         <br>
                                                                         Welcome to  Hi'bees community, You recently signed up to use Hi'bees.&nbsp;
-                                                                        <div>Kindly click the button below to activate your account.</div>
+                                                                        <div>.</div>
                                                                         <br>
                                                                         <br>
                                                                         <br>

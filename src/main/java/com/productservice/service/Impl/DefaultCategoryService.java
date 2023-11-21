@@ -19,6 +19,9 @@ public class DefaultCategoryService implements CategoryService {
 
     @Override
     public CategoryDto create(CategoryRequest category) {
+        // check if category already exists
+        Category cart = (Category) categoryRepository.findByName(category.getName())
+                .orElseThrow(() -> new CustomException("Category already exists"));
         Category category1 = new Category();
         category1.setName(category.getName());
         Category category2 = categoryRepository.save(category1);

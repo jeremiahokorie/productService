@@ -51,6 +51,4 @@ public class CategoryController {
         CategoryDto categoryDto = categoryService.getCategoryById(id);
         return ResponseEntity.ok(categoryDto);
     }
-
-
 }

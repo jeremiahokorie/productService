@@ -1,13 +1,9 @@
 package com.productservice.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.Date;
-import java.util.List;
 
 @Data
 @Entity
@@ -18,7 +14,7 @@ public class Order {
     @Id
     private Long id;
     @ManyToOne
-    private ITem item;
+    private Item item;
     @Column(name = "created_date")
     private Date date;
     private Integer qty;

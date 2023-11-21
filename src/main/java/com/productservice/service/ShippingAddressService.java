@@ -12,4 +12,6 @@ public interface ShippingAddressService {
     List<ShippingAddress> getShippingAddress();
 
     ShippingAddress getShippingAddressById(Long id);
+
+    void deleteAddress(Long id);
 }

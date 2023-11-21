@@ -41,4 +41,10 @@ public class ShippingAddressController {
     public ShippingAddress getAddressById(@PathVariable("AddressId") Long id){
         return shippingAddress.getShippingAddressById(id);
     }
+
+    @DeleteMapping("/deleteAddress/{AddressId}")
+    public ResponseEntity<?> deleteAddress(@PathVariable("AddressId") Long id){
+        shippingAddress.deleteAddress(id);
+        return new ResponseEntity<>("Address deleted successfully",HttpStatus.OK);
+    }
 }

@@ -2,37 +2,25 @@ package com.productservice.service.Impl;
 
 import com.productservice.core.exceptions.CustomException;
 import com.productservice.dto.request.CartDto;
-import com.productservice.dto.request.CartItemRequest;
 import com.productservice.persistence.entity.Cart;
-import com.productservice.persistence.entity.ITem;
+import com.productservice.persistence.entity.Item;
+import com.productservice.persistence.entity.User;
 import com.productservice.persistence.repository.CartRepository;
 import com.productservice.persistence.repository.ITemRepository;
+import com.productservice.persistence.repository.UserRepository;
 import com.productservice.service.CartService;
-import jakarta.persistence.EntityNotFoundException;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.swing.text.html.Option;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
+@AllArgsConstructor
 public class DefaultCartService implements CartService {
     ITemRepository iTemRepository;
     CartRepository cartRepository;
-
-//    @Override
-//    public void addItemToCart(Long cartId, Long itemId) {
-//        Cart cart = cartRepository.findById(cartId)
-//                .orElseThrow(() -> new EntityNotFoundException("Cart not found"));
-//        ITem item = iTemRepository.findById(itemId)
-//                .orElseThrow(() -> new EntityNotFoundException("Item not found"));
-//
-//        cart.getItems().add(item);
-//        cart.setDate(new Date());
-//        cartRepository.save(cart);
-//    }
+    UserRepository userRepository;
 
     @Override
     public List<Cart> getAllCart() {
@@ -46,12 +34,18 @@ public class DefaultCartService implements CartService {
 
     @Override
     public CartDto addToCart(CartDto cartDto) {
-        ITem item = iTemRepository.findById(cartDto.getItem().getId())
+        Item item = iTemRepository.findById(cartDto.getItemId())
               .orElseThrow(() -> new CustomException("Item not found"));
+
+        User user = userRepository.findById(cartDto.getUserId())
+                .orElseThrow(() -> new CustomException("User not found"));
         Cart cart = new Cart();
+        cart.setCartId(cartDto.getCartId());
         cart.setDate(new Date());
-        cart.getItems().add(item);
-        cart.setQuantity(cart.getQuantity());
+        cart.setItem(item);
+        cart.setQuantity(cartDto.getQuantity());
+        cart.setUser(user);
+        cart.setStatus("in progress");
         cartRepository.save(cart);
         return cartDto;
     }
@@ -63,7 +57,7 @@ public class DefaultCartService implements CartService {
         CartDto cartDto = new CartDto();
         cartDto.setCartId(cart.getCartId());
         cartDto.setDate(cart.getDate());
-        cartDto.setItem(cart.getItems().get(0));
+        cartDto.setItemId(cart.getItem().getId());
         cartDto.setQuantity(cart.getQuantity());
         cartDto.setStatus(cart.getStatus());
         return cartDto;
@@ -79,14 +73,15 @@ public class DefaultCartService implements CartService {
     public void addItemToCart(Long cartId, Long itemId) {
         Cart cart = cartRepository.findById(cartId)
                 .orElseThrow(() -> new CustomException("Cart not found"));
-        ITem item = iTemRepository.findById(itemId)
+        Item item = iTemRepository.findById(itemId)
                 .orElseThrow(() -> new CustomException("Item not found"));
 
-        cart.getItems().add(item);
+        cart.setItem(item);
         cart.setDate(new Date());
         cart.setStatus("active");
         cartRepository.save(cart);
     }
+
 
 }
 

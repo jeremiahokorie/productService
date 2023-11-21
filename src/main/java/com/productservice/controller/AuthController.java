@@ -16,7 +16,6 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(AppConstant.APP_CONTEXT)
 public class AuthController {
-
     private final AuthenticationService authenticationService;
 
     @PostMapping("login")
@@ -28,7 +27,4 @@ public class AuthController {
         map.put("token",authenticationToken);
         return new ResponseEntity(map, HttpStatus.OK);
     }
-
-
-
 }

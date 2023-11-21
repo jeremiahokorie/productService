@@ -14,5 +14,4 @@ public class ITemRequest {
     private String quantity;
     private Date date;
     private String image;
-
 }
