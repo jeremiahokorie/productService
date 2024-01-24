@@ -23,19 +23,17 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ImmutableMap;
-
 import java.nio.file.AccessDeniedException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-
 import static com.fasterxml.jackson.databind.type.LogicalType.DateTime;
 import static com.productservice.core.util.Randomizer.generate;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class DefaultUserService implements UserService {
+
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
@@ -64,7 +62,7 @@ public class DefaultUserService implements UserService {
                 .lastLoginDate(new Date())
                 .build();
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
-            throw new CustomException(" " + request.getEmail() + " Already exist, Try another email address");
+            throw new CustomException("User with this email " + request.getEmail() +". Already exist, Try another email address");
 
         }
 

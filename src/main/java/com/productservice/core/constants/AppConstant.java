@@ -18,8 +18,8 @@ import java.util.Optional;
 @Component
 public class AppConstant {
     public static final String APP_CONTEXT = "/api/core/v1";
-
     public static final String resetPasswordTemplate = "reset-password.ftl";
+
 
     @Qualifier("passwordEncoder")
     private final PasswordEncoder encoder;
@@ -38,6 +38,7 @@ public class AppConstant {
 //        this.scryptPasswordEncoder = scryptPasswordEncoder;
 //    }
 
+
     public AppConstant(PasswordEncoder encoder, PasswordEncoder argon2PasswordEncoder) {
         this.encoder = encoder;
         this.argon2PasswordEncoder = argon2PasswordEncoder;
@@ -50,6 +51,7 @@ public class AppConstant {
         }
         return Optional.empty();
     }
+
 
     public static Optional<DefaultOidcUser> getOAuth2User() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

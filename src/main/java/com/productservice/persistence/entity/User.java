@@ -33,6 +33,7 @@ public class User {
     private String state;
     @Column(name = "role", length=20)
     private String role;
+
     @Column(name = "username", length=50)
     private String username;
 

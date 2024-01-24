@@ -90,6 +90,7 @@ public class DefaultITemService implements ITemService {
 
 
 
+
     @Override
     public List<Item> getAllItemByLocation(Long id) {
         Item iTem = iTemRepository.findById(id)

@@ -27,8 +27,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 //@PreAuthorize("isAuthenticated()")
 public class UserController {
-
     private final UserService userService;
+
 
     @PostMapping("/signup")
     public ResponseEntity<UserDto> createUser(@RequestBody UserRequest user) {
@@ -38,6 +38,11 @@ public class UserController {
         map.put("message","User Created successfully");
         map.put("data",userdto);
         return new ResponseEntity(map, HttpStatus.CREATED);
+    }
+
+    @GetMapping("/")
+    public String checkAvailability(){
+        return "Available";
     }
 
     @GetMapping("/getAllUser")
@@ -93,4 +98,5 @@ public class UserController {
                 .status(HttpStatus.OK.value()).data(passwordChange).error("").build();
         return ResponseEntity.ok().body(response);
     }
+
 }

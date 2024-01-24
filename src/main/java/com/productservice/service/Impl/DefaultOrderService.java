@@ -32,21 +32,22 @@ public class DefaultOrderService implements OrderService {
     private ShippingAddressRepository addressRepository;
 
     @Override
-    public Order createOrder(OrderRequestDto orderRequestDto) {
-        Item item = itemRepository.findById(orderRequestDto.getItemId())
-                .orElseThrow(() -> new CustomException("Item not found"));
-        ShippingAddress address = addressRepository.findById(orderRequestDto.getAddressId())
-                .orElseThrow(()-> new CustomException("Address not found"));
-        Category category = categoryRepository.findById(orderRequestDto.getCategoryId())
-                .orElseThrow(()-> new CustomException("Category not found"));
+    public Order createOrder(OrderRequestDto request) {
         Order order = new Order();
+        Item item = itemRepository.findById(request.getItemId()).orElseThrow(() -> new CustomException("Item not found"));
+        Category category = categoryRepository.findById(request.getCategoryId()).orElseThrow(() -> new CustomException("Category not found"));
+        ShippingAddress address = addressRepository.findById(request.getAddressId()).orElseThrow(() -> new CustomException("Address not found"));
         order.setItem(item);
-        order.setAddress(address);
         order.setCategory(category);
+        order.setAddress(address);
+        order.setQty(request.getQty());
         order.setDate(new Date());
-        order.setQty(orderRequestDto.getQty());
+        order.setStatus("Pending");
+        orderRepository.save(order);
         return order;
     }
+
+
     @Override//45
     public List<Order> getOrder() {
      List<Order> request =  orderRepository.findAll();
@@ -59,6 +60,5 @@ public class DefaultOrderService implements OrderService {
                 .orElseThrow(() -> new CustomException("Order not found"));
 
     }
-
 
 }

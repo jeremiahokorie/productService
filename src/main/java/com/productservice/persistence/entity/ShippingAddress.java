@@ -13,9 +13,9 @@ import java.util.Date;
 @Entity
 public class ShippingAddress {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
     @Column(name = "address")

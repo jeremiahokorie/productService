@@ -35,7 +35,6 @@ public class EmailConfig {
     }
 
 
-
     @Bean
     public SimpleMailMessage simpleMailMessage() {
         return new SimpleMailMessage();
